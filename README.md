@@ -233,3 +233,93 @@ iif (req.body.email != '', function(cb) {
     update_something_else(user_id, req.body.something_else)
 })
 ```
+
+## What about promises?
+
+They are supported as well.
+
+```
+const iifp = require('iif-cb/p');
+```
+
+The format is:
+
+```
+iifp(condition).then( [callback_if_true], [callback_if_false] ).then( [callback_on_end] );
+```
+
+Examples:
+
+```
+iifp(1 == 1).then(function() {
+        console.log("Hello")
+    }, function() {
+        // this will not be run
+        console.log("The expression is false");
+    }).then(function() {
+        console.log("World")
+    }) // returns "Hello\nWorld"
+
+iifp(1 == 0).then(function() {
+        console.log("Hello"); // this will not run
+    }, () => {}).then(function() { // no "else" (reject) function
+        console.log("World");
+    }) // returns "World"
+
+iifp(1 == 1).then(function() {
+        console.log("Hello");
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000)) // calling after 1 sec
+    }, function() {
+        // this will not be run
+        console.log("The expression is false");
+    }).then(function() {
+        console.log("World");
+    }) // returns "Hello[1 sec delay]\nWorld"
+
+iifp(1 == 0).then(function() { // false condition
+        console.log("Hello") // this is not going to be called
+    }, function() {
+        console.log("World")
+    }) // returns "World"
+
+
+iifp(1 == 1).then(function() {
+        console.log("Hello");
+        if (1 == 0) {
+            console.log("Will not run")
+        } else {
+            return Promise.reject();
+        }
+    }).then(function() {
+        console.log("Will not run either")
+    }).catch(function() {
+        console.log("World")
+    }) // returns "Hello\nWorld"
+
+iifp(1 == 0).then(function() { // false condition
+        console.log("Hello"); // will not run
+    }).then(function() {
+        console.log("Will not run either")
+    }).catch(function() {
+        console.log("World")
+    }) // returns "World"
+```
+
+Our dirty example would be so:
+
+```
+iif (req.body.email != '').then(function(cb) {
+    checkIfEmailExistsOnTheDatabase(req.body.email, function(result) {
+        if(result) {
+            res.send("You can't do it")
+            return Promise.reject();
+        }
+    })
+}, () => {}).then(function() {
+    // continue updating, email check ok or user does not want to change email
+    update_name(user_id, req.body.name)
+    update_something_else(user_id, req.body.something_else)
+}).catch(function() {
+    // do nothing, email check failed
+})
+```

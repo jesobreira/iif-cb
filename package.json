@@ -1,27 +1,27 @@
 {
-  "name": "iif-cb",
-  "version": "1.0.0",
-  "description": "Avoid confusing your code due to Promises and callbacks mix",
-  "main": "index.js",
-  "scripts": {
-    "test": "node tests/test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jesobreira/iif-cb.git"
-  },
-  "keywords": [
-    "if",
-    "promise",
-    "external",
-    "callback",
-    "out",
-    "of"
-  ],
-  "author": "Jefrey Santos <jsantos@forteras.tech>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jesobreira/iif-cb/issues"
-  },
-  "homepage": "https://github.com/jesobreira/iif-cb#readme"
+    "name": "iif-cb",
+    "version": "1.1.0",
+    "description": "Avoid confusing your code due to Promises and callbacks mix",
+    "main": "index.js",
+    "scripts": {
+        "test": "node tests/test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jesobreira/iif-cb.git"
+    },
+    "keywords": [
+        "if",
+        "promise",
+        "external",
+        "callback",
+        "out",
+        "of"
+    ],
+    "author": "Jefrey Santos <jsantos@forteras.tech>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/jesobreira/iif-cb/issues"
+    },
+    "homepage": "https://github.com/jesobreira/iif-cb#readme"
 }
